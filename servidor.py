@@ -8,7 +8,6 @@ Integrantes:
 	Alfonso Vargas Alba.
 SERVIDOR.
 '''
-
 import socket
 from _thread import *
 import threading 
@@ -18,16 +17,21 @@ import os
 import os.path
 from PIL import Image
 
+## Archivo que simula la base de datos.
 PATH = "Pokedex.txt"
-HOST = '127.0.0.1'  # (localhost)
-PORT = 9999        # Puerto a escuchar.
+## LocalHost.
+HOST = '127.0.0.1'
+## Puerto a escuchar.
+PORT = 9999     
+## Número máximo de intentos.   
 intentos_max = 5
 
-'''
-Función que nos sirve para crear un nuevo thread (cliente) y manejar la conexión con éste.
-@param conn. La conexión con ese cliente.
-'''
+
 def client_thread(conn):
+	'''
+	Función que nos sirve para crear un nuevo thread (cliente) y manejar la conexión con éste.
+	@param conn. La conexión con ese cliente.
+	'''
 	usuarios = "-"
 	# Verificamos los usuarios que estén disponibles.
 	for i in range(1, 4):
@@ -97,8 +101,10 @@ def client_thread(conn):
 
 if __name__ == '__main__':
 
-	# Para tener control sobre cuál usuario está conectado. 
+	##  Diccionario para tener control sobre cuál usuario está conectado. 
 	usuarios_disp = {"1":True, "2":True, "3":True}
+
+	## Diccionario que tiene el nombre de los pokemons.
 
 	pokemones = ["Pikachu", "Eve", "Squirtle", "Charmander","Charizard", "Pidgeotto", "Sandshrew", 
 				 "Vulpix", "Seadra", "Mewtwo", "Snorlax", "Kangaskhan", "Bulbasaur"]
@@ -106,6 +112,7 @@ if __name__ == '__main__':
 	# Si no existe un archivo que guarde los pokemones de cada usuario, lo creamos. Si no, lo usamos.
 	try:
 		print("Verificando existencia de la Base de datos...")
+		## Variable para manejo del archivo de base de datos.
 		f = open(PATH, "r")
 		print("¡Existe! Procediendo a iniciar servidor.")
 		f.close()
@@ -115,18 +122,20 @@ if __name__ == '__main__':
 		f.write("POKEMONES del Usuario_1:\n- \n\nPOKEMONES del Usuario_2\n- \n\nPOKEMONES del Usuario_3\n- ")
 		f.close()
 
-
+	## Socket para el host y el puerto.
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
 	s.bind((HOST, PORT)) 
 	print("Socket atado al puerto", PORT) 
    
 	s.listen(5) 
 	print("Socket escuchando...") 
+	## Cadena para dar con el estado del servidor.
 	estado_actual = "s0"
 	
 	while True:
 		try:
 			# Espera por aceptar una conexión.
+			## Variable para confirmar la conexión.			
 			conn, addr = s.accept()
 			print("[-] Sesión iniciada por " + addr[0] + ":" + str(addr[1]))
 

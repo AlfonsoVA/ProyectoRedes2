@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 '''
 Proyecto 2 - Redes de Computadoras.
@@ -13,6 +14,7 @@ from _thread import *
 import threading 
 import random
 import pickle
+import time
 import os
 import os.path
 from PIL import Image
@@ -25,7 +27,8 @@ HOST = '127.0.0.1'
 PORT = 9999     
 ## Número máximo de intentos.   
 intentos_max = 5
-
+##Tiempo de espera de respuesta del servidor, en segundos
+tiemOut = 5
 
 def client_thread(conn):
 	'''
@@ -57,11 +60,12 @@ def client_thread(conn):
 	conn.send(msg.encode('utf-8'))
 
 	while True:
-		
 		# Cargamos el mensaje que envió el cliente. Vemos en qué estado estamos y a cuál nos iremos.
 		msg_reci = pickle.loads(conn.recv(4096))
 		estado_actual = msg_reci[-1]
-		
+		#if timeOut(ti):
+		#	print("Error 40: Tiempo de espera excedido")
+		#	break
 		if estado_actual == "s1":
 			id_p = random.randrange(len(pokemones))
 			msg = pickle.dumps((20, id_p, "s2"))
@@ -124,9 +128,12 @@ if __name__ == '__main__':
 
 	## Socket para el host y el puerto.
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+	#Tiempo de espera.
+	s.settimeout(tiemOut)
 	s.bind((HOST, PORT)) 
-	print("Socket atado al puerto", PORT) 
-   
+	print("Socket atado al puerto", PORT)
+	s.settimeout(None)
+	
 	s.listen(5) 
 	print("Socket escuchando...") 
 	## Cadena para dar con el estado del servidor.
@@ -138,10 +145,12 @@ if __name__ == '__main__':
 			## Variable para confirmar la conexión.			
 			conn, addr = s.accept()
 			print("[-] Sesión iniciada por " + addr[0] + ":" + str(addr[1]))
-
 			# Cliente conectado, creamos su hilo correspondiente.
 			start_new_thread(client_thread, (conn,))
+		except socket.timeout:
+			print("Error 40: Tiempo de espera excedido. \n Cerrando conexión...")
+			break
 		except EOFError:
-			print("Ha habido algún error al momento de intentar cargar información recibida. Continuando...")
+			print("Error 40: Hubó algún error al momento de intentar cargar información recibida. Continuando...")
 
 	s.close()

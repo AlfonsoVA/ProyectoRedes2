@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 '''
 Proyecto 2 - Redes de Computadoras.
@@ -13,13 +14,16 @@ import socket
 import pickle
 import sys
 
+## Número máximo de intentos.
 intentos_max = 5
+##Tiempo de espera de respuesta del servidor, en segundos
+tiemOut = 5
 
 if __name__ == '__main__':
 
 	# Lista de Pokemones.
 	pokemones = ["Pikachu", "Eve", "Squirtle", "Charmander","Charizard", "Pidgeotto", "Sandshrew", 
-			     "Vulpix", "Seadra", "Mewtwo", "Snorlax", "Kangaskhan", "Bulbasaur"]
+				 "Vulpix", "Seadra", "Mewtwo", "Snorlax", "Kangaskhan", "Bulbasaur"]
 
 	if(len(sys.argv) != 3):
 		print("ERROR EN PARÁMETROS\nDebes introducir la Dirección IP del servidor a conectarse y el Puerto, ejemplo:\n $python3 cliente.py 127.0.0.1 9999")
@@ -32,7 +36,12 @@ if __name__ == '__main__':
 	
 	try:
 		s = socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
+		s.settimeout(tiemOut) #Limite te tiempo para hacer la conexión
 		s.connect((host,port)) # Nos conectamos al server.
+		s.settimeout(None) # Ya lo quitamos porque ya nos conectamos :)
+	except socket.timeout:
+		print("\n\nError 40: Tiempo de espera para la conexión excedido. \n")
+		exit(-1)
 	except ConnectionRefusedError:
 		print("Se ha rechazado la conexión del servidor. Puede que éste no esté disponible o los paramétros que introdujo sean incorrectos.")
 		exit(-1)

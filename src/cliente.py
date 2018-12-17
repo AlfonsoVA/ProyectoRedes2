@@ -109,3 +109,7 @@ if __name__ == '__main__':
 			print("Ha habido algún error al momento de intentar cargar información recibida. Saliendo...")
 			s.close()
 			exit(-1)
+	except BrokenPipeError:
+			print("\n\tTu sesióń fue finalizada por el servidor.\nTardaste mucho en responder :c\n")
+			s.close()
+			exit(-1)

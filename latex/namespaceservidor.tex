@@ -1,0 +1,166 @@
+\hypertarget{namespaceservidor}{}\section{servidor Namespace Reference}
+\label{namespaceservidor}\index{servidor@{servidor}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceservidor_a8548dd2cea1eb0587af6521b18bbc989}{client\+\_\+thread} (\hyperlink{namespaceservidor_a6c80b4f26b7083ecd69b24985e6f9d1e}{conn})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{namespaceservidor_a841929f3d10a7b72399f0925da460cd9}{P\+A\+TH} = \char`\"{}Pokedex.\+txt\char`\"{}
+\begin{DoxyCompactList}\small\item\em Archivo que simula la base de datos. \end{DoxyCompactList}\item 
+string \hyperlink{namespaceservidor_ab5793eb47d5467cdb26a6193b7196ecf}{H\+O\+ST} = \textquotesingle{}127.\+0.\+0.\+1\textquotesingle{}
+\begin{DoxyCompactList}\small\item\em Local\+Host. \end{DoxyCompactList}\item 
+int \hyperlink{namespaceservidor_abc87a53cb2df8d9c399e979b4dbd45fa}{P\+O\+RT} = 9999
+\begin{DoxyCompactList}\small\item\em Puerto a escuchar. \end{DoxyCompactList}\item 
+int \hyperlink{namespaceservidor_a32acd4b3f7d9a4ca9489be7adaa1e209}{intentos\+\_\+max} = 5
+\begin{DoxyCompactList}\small\item\em Número máximo de intentos. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceservidor_ace44552d92d27a9778ad8215559c3c74}\label{namespaceservidor_ace44552d92d27a9778ad8215559c3c74}} 
+int \hyperlink{namespaceservidor_ace44552d92d27a9778ad8215559c3c74}{tiem\+Out} = 5
+\begin{DoxyCompactList}\small\item\em Tiempo de espera de respuesta del servidor, en segundos. \end{DoxyCompactList}\item 
+dictionary \hyperlink{namespaceservidor_a426dd886ca17c5f85d5638637ffdf558}{usuarios\+\_\+disp} = \{\char`\"{}1\char`\"{}\+:True, \char`\"{}2\char`\"{}\+:True, \char`\"{}3\char`\"{}\+:True\}
+\begin{DoxyCompactList}\small\item\em Diccionario para tener control sobre cuál usuario está conectado. \end{DoxyCompactList}\item 
+list \hyperlink{namespaceservidor_ad51227f75b32d668586bfc7516a1d140}{pokemones}
+\begin{DoxyCompactList}\small\item\em Diccionario que tiene el nombre de los pokemons. \end{DoxyCompactList}\item 
+\hyperlink{namespaceservidor_a3b9b4590841faa9a4f552f71664e1c90}{f} = open(\hyperlink{namespaceservidor_a841929f3d10a7b72399f0925da460cd9}{P\+A\+TH}, \char`\"{}r\char`\"{})
+\begin{DoxyCompactList}\small\item\em Variable para manejo del archivo de base de datos. \end{DoxyCompactList}\item 
+\hyperlink{namespaceservidor_ad669abe2ca77beb8398dc4bee9e84daa}{s} = socket.\+socket(socket.\+A\+F\+\_\+\+I\+N\+ET, socket.\+S\+O\+C\+K\+\_\+\+S\+T\+R\+E\+AM)
+\begin{DoxyCompactList}\small\item\em Socket para el host y el puerto. \end{DoxyCompactList}\item 
+string \hyperlink{namespaceservidor_a08a280b4474bca22179197a9e23f3dde}{estado\+\_\+actual} = \char`\"{}s0\char`\"{}
+\begin{DoxyCompactList}\small\item\em Cadena para dar con el estado del servidor. \end{DoxyCompactList}\item 
+\hyperlink{namespaceservidor_a6c80b4f26b7083ecd69b24985e6f9d1e}{conn}
+\begin{DoxyCompactList}\small\item\em Variable para confirmar la conexión. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceservidor_a808a5243ea7d823265019a7f00bd0483}\label{namespaceservidor_a808a5243ea7d823265019a7f00bd0483}} 
+{\bfseries addr}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Proyecto 2 - Redes de Computadoras.
+Integrantes:
+    Karla Fernanda Jiménez Gutierrez.
+    Jonathan Suárez López.
+    Alfonso Vargas Alba.
+SERVIDOR.
+\end{DoxyVerb}
+ 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespaceservidor_a8548dd2cea1eb0587af6521b18bbc989}\label{namespaceservidor_a8548dd2cea1eb0587af6521b18bbc989}} 
+\index{servidor@{servidor}!client\+\_\+thread@{client\+\_\+thread}}
+\index{client\+\_\+thread@{client\+\_\+thread}!servidor@{servidor}}
+\subsubsection{\texorpdfstring{client\+\_\+thread()}{client\_thread()}}
+{\footnotesize\ttfamily def servidor.\+client\+\_\+thread (\begin{DoxyParamCaption}\item[{}]{conn }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Función que nos sirve para crear un nuevo thread (cliente) y manejar la conexión con éste.
+@param conn. La conexión con ese cliente.
+\end{DoxyVerb}
+ 
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{namespaceservidor_a6c80b4f26b7083ecd69b24985e6f9d1e}\label{namespaceservidor_a6c80b4f26b7083ecd69b24985e6f9d1e}} 
+\index{servidor@{servidor}!conn@{conn}}
+\index{conn@{conn}!servidor@{servidor}}
+\subsubsection{\texorpdfstring{conn}{conn}}
+{\footnotesize\ttfamily servidor.\+conn}
+
+
+
+Variable para confirmar la conexión. 
+
+\mbox{\Hypertarget{namespaceservidor_a08a280b4474bca22179197a9e23f3dde}\label{namespaceservidor_a08a280b4474bca22179197a9e23f3dde}} 
+\index{servidor@{servidor}!estado\+\_\+actual@{estado\+\_\+actual}}
+\index{estado\+\_\+actual@{estado\+\_\+actual}!servidor@{servidor}}
+\subsubsection{\texorpdfstring{estado\+\_\+actual}{estado\_actual}}
+{\footnotesize\ttfamily string servidor.\+estado\+\_\+actual = \char`\"{}s0\char`\"{}}
+
+
+
+Cadena para dar con el estado del servidor. 
+
+\mbox{\Hypertarget{namespaceservidor_a3b9b4590841faa9a4f552f71664e1c90}\label{namespaceservidor_a3b9b4590841faa9a4f552f71664e1c90}} 
+\index{servidor@{servidor}!f@{f}}
+\index{f@{f}!servidor@{servidor}}
+\subsubsection{\texorpdfstring{f}{f}}
+{\footnotesize\ttfamily servidor.\+f = open(\hyperlink{namespaceservidor_a841929f3d10a7b72399f0925da460cd9}{P\+A\+TH}, \char`\"{}r\char`\"{})}
+
+
+
+Variable para manejo del archivo de base de datos. 
+
+\mbox{\Hypertarget{namespaceservidor_ab5793eb47d5467cdb26a6193b7196ecf}\label{namespaceservidor_ab5793eb47d5467cdb26a6193b7196ecf}} 
+\index{servidor@{servidor}!H\+O\+ST@{H\+O\+ST}}
+\index{H\+O\+ST@{H\+O\+ST}!servidor@{servidor}}
+\subsubsection{\texorpdfstring{H\+O\+ST}{HOST}}
+{\footnotesize\ttfamily string servidor.\+H\+O\+ST = \textquotesingle{}127.\+0.\+0.\+1\textquotesingle{}}
+
+
+
+Local\+Host. 
+
+\mbox{\Hypertarget{namespaceservidor_a32acd4b3f7d9a4ca9489be7adaa1e209}\label{namespaceservidor_a32acd4b3f7d9a4ca9489be7adaa1e209}} 
+\index{servidor@{servidor}!intentos\+\_\+max@{intentos\+\_\+max}}
+\index{intentos\+\_\+max@{intentos\+\_\+max}!servidor@{servidor}}
+\subsubsection{\texorpdfstring{intentos\+\_\+max}{intentos\_max}}
+{\footnotesize\ttfamily int servidor.\+intentos\+\_\+max = 5}
+
+
+
+Número máximo de intentos. 
+
+\mbox{\Hypertarget{namespaceservidor_a841929f3d10a7b72399f0925da460cd9}\label{namespaceservidor_a841929f3d10a7b72399f0925da460cd9}} 
+\index{servidor@{servidor}!P\+A\+TH@{P\+A\+TH}}
+\index{P\+A\+TH@{P\+A\+TH}!servidor@{servidor}}
+\subsubsection{\texorpdfstring{P\+A\+TH}{PATH}}
+{\footnotesize\ttfamily string servidor.\+P\+A\+TH = \char`\"{}Pokedex.\+txt\char`\"{}}
+
+
+
+Archivo que simula la base de datos. 
+
+\mbox{\Hypertarget{namespaceservidor_ad51227f75b32d668586bfc7516a1d140}\label{namespaceservidor_ad51227f75b32d668586bfc7516a1d140}} 
+\index{servidor@{servidor}!pokemones@{pokemones}}
+\index{pokemones@{pokemones}!servidor@{servidor}}
+\subsubsection{\texorpdfstring{pokemones}{pokemones}}
+{\footnotesize\ttfamily list servidor.\+pokemones}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 =  [\textcolor{stringliteral}{"Pikachu"}, \textcolor{stringliteral}{"Eve"}, \textcolor{stringliteral}{"Squirtle"}, \textcolor{stringliteral}{"Charmander"},\textcolor{stringliteral}{"Charizard"}, \textcolor{stringliteral}{"Pidgeotto"}, \textcolor{stringliteral}{"Sandshrew"}, 
+2                  \textcolor{stringliteral}{"Vulpix"}, \textcolor{stringliteral}{"Seadra"}, \textcolor{stringliteral}{"Mewtwo"}, \textcolor{stringliteral}{"Snorlax"}, \textcolor{stringliteral}{"Kangaskhan"}, \textcolor{stringliteral}{"Bulbasaur"}]
+\end{DoxyCode}
+
+
+Diccionario que tiene el nombre de los pokemons. 
+
+\mbox{\Hypertarget{namespaceservidor_abc87a53cb2df8d9c399e979b4dbd45fa}\label{namespaceservidor_abc87a53cb2df8d9c399e979b4dbd45fa}} 
+\index{servidor@{servidor}!P\+O\+RT@{P\+O\+RT}}
+\index{P\+O\+RT@{P\+O\+RT}!servidor@{servidor}}
+\subsubsection{\texorpdfstring{P\+O\+RT}{PORT}}
+{\footnotesize\ttfamily int servidor.\+P\+O\+RT = 9999}
+
+
+
+Puerto a escuchar. 
+
+\mbox{\Hypertarget{namespaceservidor_ad669abe2ca77beb8398dc4bee9e84daa}\label{namespaceservidor_ad669abe2ca77beb8398dc4bee9e84daa}} 
+\index{servidor@{servidor}!s@{s}}
+\index{s@{s}!servidor@{servidor}}
+\subsubsection{\texorpdfstring{s}{s}}
+{\footnotesize\ttfamily servidor.\+s = socket.\+socket(socket.\+A\+F\+\_\+\+I\+N\+ET, socket.\+S\+O\+C\+K\+\_\+\+S\+T\+R\+E\+AM)}
+
+
+
+Socket para el host y el puerto. 
+
+\mbox{\Hypertarget{namespaceservidor_a426dd886ca17c5f85d5638637ffdf558}\label{namespaceservidor_a426dd886ca17c5f85d5638637ffdf558}} 
+\index{servidor@{servidor}!usuarios\+\_\+disp@{usuarios\+\_\+disp}}
+\index{usuarios\+\_\+disp@{usuarios\+\_\+disp}!servidor@{servidor}}
+\subsubsection{\texorpdfstring{usuarios\+\_\+disp}{usuarios\_disp}}
+{\footnotesize\ttfamily dictionary servidor.\+usuarios\+\_\+disp = \{\char`\"{}1\char`\"{}\+:True, \char`\"{}2\char`\"{}\+:True, \char`\"{}3\char`\"{}\+:True\}}
+
+
+
+Diccionario para tener control sobre cuál usuario está conectado. 
+

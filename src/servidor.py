@@ -27,8 +27,36 @@ HOST = '127.0.0.1'
 PORT = 9999     
 ## Número máximo de intentos.   
 intentos_max = 5
-##Tiempo de espera de respuesta del servidor, en segundos
-tiemOut = 5
+##Tiempo de espera de conex del servidor, en segundos
+tiemOut = 10
+
+def edo3(conn,intentos_act,id_p,usuario_recv):
+	if intentos_act < intentos_max:
+		if(random.random() >= 0.75): # Si lo capturó. Hay 25% de probabilidades que lo haga.
+			lines = open(PATH).read().splitlines()
+			if usuario_recv == "1":
+				lines[1] = lines[1] + " " + pokemones[id_p]
+			elif usuario_recv == "2":
+				lines[4] = lines[4] + " " + pokemones[id_p]
+			elif usuario_recv == "3":
+				lines[7] = lines[7] + " " + pokemones[id_p]
+
+			open(PATH,'w').write('\n'.join(lines))
+
+			img = Image.open("Pokemones/"+ pokemones[id_p] +".jpg")
+			img.show()
+			msg = pickle.dumps((22, id_p, "s5"))
+		else:
+			msg = pickle.dumps((21, id_p, (intentos_act+1), "s4"))
+	else: #Ya no quedan intentos.
+		msg = pickle.dumps((23, "s6"))
+	conn.sendall(msg)
+
+def cerrarSesion(conn, usuario_recv):
+	msg = pickle.dumps((32, "s7"))
+	print("[-] Cerrando la sesión de un cliente.")
+	usuarios_disp[usuario_recv] = True
+	conn.sendall(msg)
 
 def client_thread(conn):
 	'''
@@ -60,46 +88,28 @@ def client_thread(conn):
 	conn.send(msg.encode('utf-8'))
 
 	while True:
-		# Cargamos el mensaje que envió el cliente. Vemos en qué estado estamos y a cuál nos iremos.
-		msg_reci = pickle.loads(conn.recv(4096))
-		estado_actual = msg_reci[-1]
-		#if timeOut(ti):
-		#	print("Error 40: Tiempo de espera excedido")
-		#	break
-		if estado_actual == "s1":
-			id_p = random.randrange(len(pokemones))
-			msg = pickle.dumps((20, id_p, "s2"))
-			conn.sendall(msg)
-		elif estado_actual == "s3":
-			intentos_act = msg_reci[1]
-			if intentos_act < intentos_max:
-				if(random.random() >= 0.75): # Si lo capturó. Hay 25% de probabilidades que lo haga.
-					lines = open(PATH).read().splitlines()
-					if usuario_recv == "1":
-						lines[1] = lines[1] + " " + pokemones[id_p]
-					elif usuario_recv == "2":
-						lines[4] = lines[4] + " " + pokemones[id_p]
-					elif usuario_recv == "3":
-						lines[7] = lines[7] + " " + pokemones[id_p]
-
-					open(PATH,'w').write('\n'.join(lines))
-
-					img = Image.open("Pokemones/"+ pokemones[id_p] +".jpg")
-					img.show()
-					msg = pickle.dumps((22, id_p, "s5"))
-				else:
-					msg = pickle.dumps((21, id_p, (intentos_act+1), "s4"))
-			else: #Ya no quedan intentos.
-				msg = pickle.dumps((23, "s6"))
-			conn.sendall(msg)
-		elif estado_actual == "s6": #Terminó la sesión
-			msg = pickle.dumps((32, "s6"))
-			conn.sendall(msg)
-		elif estado_actual == "s7":
-			msg = pickle.dumps((32, "s7"))
-			print("[-] Cerrando la sesión de un cliente.")
-			usuarios_disp[usuario_recv] = True
-			conn.sendall(msg)
+		#Tiempo de espera para recibir respuesta.
+		conn.settimeout(tiemOut)
+		try:
+			# Cargamos el mensaje que envió el cliente. Vemos en qué estado estamos y a cuál nos iremos.
+			msg_reci = pickle.loads(conn.recv(4096))
+			conn.settimeout(None)
+			estado_actual = msg_reci[-1]
+			if estado_actual == "s1":
+				id_p = random.randrange(len(pokemones))
+				msg = pickle.dumps((20, id_p, "s2"))
+				conn.sendall(msg)
+			elif estado_actual == "s3":
+				edo3(conn,msg_reci[1], id_p, usuario_recv)
+			elif estado_actual == "s6": #Terminó la sesión
+				msg = pickle.dumps((32, "s6"))
+				conn.sendall(msg)
+			elif estado_actual == "s7":
+				cerrarSesion(conn,usuario_recv)
+				break
+		except socket.timeout:
+			print("[Error 40] Tiempo de espera excedido. \n\t Cerrando conexión...")
+			cerrarSesion(conn,usuario_recv)
 			break
 	conn.close()
 
@@ -128,6 +138,10 @@ if __name__ == '__main__':
 
 	## Socket para el host y el puerto.
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+	#Para reutilizar el socket aun si lo cerramos inesperadamente 
+	#https://www.programcreek.com/python/example/410/socket.SO_REUSEADDR
+	s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)	
+
 	#Tiempo de espera.
 	s.settimeout(tiemOut)
 	s.bind((HOST, PORT)) 
